@@ -7,19 +7,18 @@ Menu::Menu(float width, float height, sf::Font& font)
 	text[0].setFont(font);
 	text[0].setFillColor(sf::Color::Green);
 	text[0].setString("Play");
-	text[0].setPosition(sf::Vector2f(width/2,height/(MAIN_MENU_ITEMS+1)*1));
+	text[0].setPosition(sf::Vector2f(width/2 - text[0].getGlobalBounds().width / 2,height/(MAIN_MENU_ITEMS+1)*1));
 
 	text[1].setFont(font);
 	text[1].setCharacterSize(32);
 	text[1].setFillColor(sf::Color::White);
 	text[1].setString("Settings");
-	printf("%f\n", text[1].getGlobalBounds().width / 2.f);
 	text[1].setPosition(sf::Vector2f(width / 2 - text[1].getGlobalBounds().width / 2, height / (MAIN_MENU_ITEMS + 1) * 2));
 
 	text[2].setFont(font);
 	text[2].setFillColor(sf::Color::White);
 	text[2].setString("Exit");
-	text[2].setPosition(sf::Vector2f(width / 2, height / (MAIN_MENU_ITEMS + 1) * 3));
+	text[2].setPosition(sf::Vector2f(width / 2 - text[2].getGlobalBounds().width / 2, height / (MAIN_MENU_ITEMS + 1) * 3));
 }
 
 Menu::Menu()

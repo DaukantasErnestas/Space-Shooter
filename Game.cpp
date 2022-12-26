@@ -46,10 +46,10 @@ void Game::initEnemies()
 Game::Game()
 {
 	this->initVariables();
+	this->initFonts();
 	this->initText();
 	this->initWindow();
 	this->initBackground();
-	this->initFonts();
 	this->initEnemies();
 }
 
@@ -77,14 +77,19 @@ void Game::pollEvents()
 
 		if (this->ev.type == sf::Event::KeyPressed)
 		{
-			switch (this->ev.key.code)
+			if (inMenus)
 			{
-			case sf::Keyboard::Up:
-				menu.MoveUp();
-				break;
-			case sf::Keyboard::Down:
-				menu.MoveDown();
-				break;
+				switch (this->ev.key.code)
+				{
+				case sf::Keyboard::Up:
+					menu.MoveUp();
+					break;
+				case sf::Keyboard::Down:
+					menu.MoveDown();
+					break;
+				case sf::Keyboard::Return:
+					break;
+				}
 			}
 		}
 	}
