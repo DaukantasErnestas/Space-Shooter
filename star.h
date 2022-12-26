@@ -30,20 +30,22 @@ public:
             float randY = static_cast<float>(rand() % static_cast<int>(view.getSize().y));
             float size = static_cast<float>(rand() % 10);
             float lifetime = (static_cast<float>(rand() % 60) - 20)/10;
-            sf::Uint8 color = static_cast<sf::Uint8>((rand() % 128) + 127);
+            float color = static_cast<float>((rand() % 128) + 127);
             int colorToAdd = rand() % 3;
             float colorContrast = static_cast<float>(rand() % 10)/10.f+1.f;
+            sf::Uint8 defaultColor = static_cast<sf::Uint8>(color);
+            sf::Uint8 modifiedColor = static_cast<sf::Uint8>(floor(color / colorContrast + 0.5f));
             sf::Color vertColor;
             if (colorToAdd == 0) {
-                vertColor = sf::Color(color, color / colorContrast, color / colorContrast, 255);
+                vertColor = sf::Color(defaultColor, modifiedColor, modifiedColor, 255);
 
             }
             else if (colorToAdd == 1) {
-                vertColor = sf::Color(color / colorContrast, color / colorContrast, color, 255);
+                vertColor = sf::Color(modifiedColor, modifiedColor, defaultColor, 255);
             }
             else
             {
-                vertColor = sf::Color(color, color, color, 255);
+                vertColor = sf::Color(defaultColor, defaultColor, defaultColor, 255);
             }
             Particle& p = m_particles[i];
             p.lifetime = lifetime;

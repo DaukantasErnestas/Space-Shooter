@@ -1,6 +1,7 @@
 #pragma once
 
 #include "star.h"
+#include "menu.h"
 #include "explosion.h"
 
 #include <stdio.h>
@@ -39,6 +40,7 @@ private:
 	sf::Text uiText;
 
 	bool endGame;
+	bool inMenus;
 	unsigned points;
 	int health;
 	float enemySpawnTimer;
@@ -55,6 +57,8 @@ private:
 	sf::Sprite enemy;
 
 	sf::RectangleShape background;
+
+	Menu menu;
 
 	void initVariables();
 	void initBackground();
@@ -85,6 +89,7 @@ public:
 	void renderText(sf::RenderTarget& target);
 	void renderEnemies(sf::RenderTarget& target);
 	void renderExplosions(sf::RenderTarget& target);
+	void renderMenu(sf::RenderTarget& target);
 	void render();
 };
 

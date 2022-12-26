@@ -19,7 +19,6 @@ public:
 	{
 		counter += elapsed;
 		int frame = static_cast<int>(floor(counter*30));
-		printf("%d\n", frame);
 		if (frame > 27)
 		{
 			return true;

@@ -17,7 +17,8 @@ void Game::initVariables()
 
 	this->explosionTexture.loadFromFile("Textures/explosion.png");
 
-	this->endGame = true;
+	this->endGame = false;
+	this->inMenus = true;
 	this->points = 0;
 	this->health = 10;
 	this->enemySpawnTimerMax = 0.5f;
@@ -32,6 +33,7 @@ void Game::initWindow()
 	this->view.setSize(static_cast<float>(this->windowSizeX), static_cast<float>(this->windowSizeY));
 	this->view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
 	this->view = getLetterboxView(this->view, this->windowSizeX, this->windowSizeY);
+	this->menu = Menu(this->view.getSize().x,this->view.getSize().y,this->font);
 	//this->window->setFramerateLimit(60);
 }
 
@@ -44,10 +46,10 @@ void Game::initEnemies()
 Game::Game()
 {
 	this->initVariables();
+	this->initText();
 	this->initWindow();
 	this->initBackground();
 	this->initFonts();
-	this->initText();
 	this->initEnemies();
 }
 
@@ -71,6 +73,19 @@ void Game::pollEvents()
 			this->windowSizeX = this->ev.size.width;
 			this->windowSizeY = this->ev.size.height;
 			this->view = getLetterboxView(this->view, this->ev.size.width, this->ev.size.height);
+		}
+
+		if (this->ev.type == sf::Event::KeyPressed)
+		{
+			switch (this->ev.key.code)
+			{
+			case sf::Keyboard::Up:
+				menu.MoveUp();
+				break;
+			case sf::Keyboard::Down:
+				menu.MoveDown();
+				break;
+			}
 		}
 	}
 }
@@ -113,6 +128,9 @@ void Game::render()
 	this->renderExplosions(*this->window);
 
 	this->renderText(*this->window);
+
+	if (this->inMenus)
+		this->renderMenu(*this->window);
 
 	this->window->display();
 }
@@ -220,11 +238,8 @@ void Game::initBackground()
 {
 	this->background.setFillColor(sf::Color(15, 15, 25, 255));
 	this->background.setSize(sf::Vector2f(static_cast<float>(this->view.getSize().x), static_cast<float>(this->view.getSize().y)));
-	for (int i = 0; i < 100; i++)
-	{
-		this->stars = Stars(2000);
-		this->stars.updatePosition(this->view);
-	}
+	this->stars = Stars(2000);
+	this->stars.updatePosition(this->view);
 }
 
 void Game::updateText()
@@ -301,6 +316,11 @@ void Game::renderExplosions(sf::RenderTarget& target)
 	{
 		target.draw(e);
 	}
+}
+
+void Game::renderMenu(sf::RenderTarget& target)
+{
+	menu.draw(target);
 }
 
 void Game::renderText(sf::RenderTarget& target)
